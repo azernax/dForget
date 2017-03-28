@@ -4,15 +4,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.azernax.dforget.MainActivity">
+    tools:context="com.example.azernax.dforget.AddActivity">
 
-    <GridView
-        android:id="@+id/dgw"
+    <CalendarView
+        android:id="@+id/calendarView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="300dp"
+        android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
-        android:fastScrollAlwaysVisible="true"
-        android:fastScrollEnabled="true"
-        android:numColumns="8" >
-    </GridView>
+        android:layout_alignParentStart="true" />
+
 </RelativeLayout>
