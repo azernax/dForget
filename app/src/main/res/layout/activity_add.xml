@@ -6,6 +6,7 @@
     android:layout_height="match_parent"
     tools:context="com.example.azernax.dforget.AddActivity">
 
+
     <CalendarView
         android:id="@+id/calendarView"
         android:layout_width="match_parent"
@@ -13,5 +14,58 @@
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
+
+    <EditText
+        android:id="@+id/txt_description"
+        android:layout_width="150dp"
+        android:layout_height="40dp"
+        android:layout_marginLeft="26dp"
+        android:layout_marginStart="26dp"
+        android:ems="10"
+        android:inputType="textMultiLine"
+        android:layout_below="@+id/calendarView"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="70dp" />
+
+    <EditText
+        android:id="@+id/txt_importance"
+        android:layout_width="20dp"
+        android:layout_height="40dp"
+        android:ems="10"
+        android:inputType="textShortMessage"
+        android:text="c"
+        android:layout_alignBaseline="@+id/txt_description"
+        android:layout_alignBottom="@+id/txt_description"
+        android:layout_toRightOf="@+id/txt_description"
+        android:layout_toEndOf="@+id/txt_description"
+        android:layout_marginLeft="20dp"
+        android:layout_marginStart="20dp" />
+
+    <EditText
+        android:id="@+id/txt_hour"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginLeft="23dp"
+        android:layout_marginStart="23dp"
+        android:ems="10"
+        android:inputType="number"
+        android:layout_alignBaseline="@+id/txt_importance"
+        android:layout_alignBottom="@+id/txt_importance"
+        android:layout_toRightOf="@+id/txt_importance"
+        android:layout_toEndOf="@+id/txt_importance" />
+
+    <EditText
+        android:id="@+id/txt_minutes"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginLeft="25dp"
+        android:layout_marginStart="25dp"
+        android:ems="10"
+        android:inputType="number"
+        android:layout_alignBaseline="@+id/txt_hour"
+        android:layout_alignBottom="@+id/txt_hour"
+        android:layout_toRightOf="@+id/txt_hour"
+        android:layout_toEndOf="@+id/txt_hour" />
 
 </RelativeLayout>
