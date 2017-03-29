@@ -1,6 +1,8 @@
 package com.example.azernax.dforget;
 
+import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.provider.ContactsContract;
@@ -14,6 +16,7 @@ public class DataBaseHandler {
     //variables
     DataBaseHelper dbHelper;
     Context context;
+    SQLiteDatabase db;
 
     //constructor
     public DataBaseHandler(Context ctx)
@@ -46,5 +49,41 @@ public class DataBaseHandler {
         }
     }
 
+
+    //create or open database for reading and writing
+    public DataBaseHandler open()
+    {
+        db = dbHelper.getWritableDatabase();
+        return this;
+    }
+
+
+    //close database
+    public void close()
+    {
+        dbHelper.close();
+    }
+
+
+    //metod for insert data
+    public long InsertData(String description_event, int importance_event, int hour_event, int minutes_event, int day_event, int month_event, int year_event)
+    {
+        ContentValues content=new ContentValues();
+        content.put("description_event", description_event);
+        content.put("importance_event", importance_event);
+        content.put("hour_event", hour_event);
+        content.put("minutes_event", minutes_event);
+        content.put("day_event", day_event);
+        content.put("month_event", month_event);
+        content.put("year_event", year_event);
+        return db.insertOrThrow("eventsTab",null, content);
+    }
+
+
+    //SELECT *
+    public Cursor DisplayData()
+    {
+        return db.rawQuery("SELECT * FROM eventsTab", null);
+    }
 
 }
