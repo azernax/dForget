@@ -37,7 +37,7 @@ public class DataBaseHandler {
         //create db and table if not exist
         @Override
         public void onCreate(SQLiteDatabase db) {
-            db.execSQL("CREATE TABLE eventsTab(id_event INTEGER PRIMARY KEY AUTOINCREMENT, descrition_event VARCHAR(150) NOT NULL, importance_event VARCHAR(2) DEFAULT 'C',hour_event INTEGER NOT NULL, minutes_event INTEGER NOT NULL, day_event INTEGER NOT NULL, month_event INTEGER NOT NULL, year_event INTEGER NOT NULL);");
+            db.execSQL("CREATE TABLE eventsTab(id_event INTEGER PRIMARY KEY AUTOINCREMENT, description_event VARCHAR(150) NOT NULL, importance_event VARCHAR(2) DEFAULT 'C',hour_event INTEGER NOT NULL, minutes_event INTEGER NOT NULL, day_event INTEGER NOT NULL, month_event INTEGER NOT NULL, year_event INTEGER NOT NULL);");
         }
 
 

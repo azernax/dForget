@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.GridView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -35,19 +36,21 @@ public class MainActivity extends Activity {
         handler=new DataBaseHandler(getBaseContext());
         handler.open();
 
-        Cursor c = handler.DisplayData();
 
+try
+{
+    Cursor c = handler.DisplayData();
         if(c.moveToFirst())
         {
             do
             {
-                description=c.getString(c.getColumnIndex("decsription"));
-                importance=c.getString(c.getColumnIndex("importance"));
-                hour=c.getString(c.getColumnIndex("hour"));
-                minutes=c.getString(c.getColumnIndex("minutes"));
-                day=c.getString(c.getColumnIndex("day"));
-                month=c.getString(c.getColumnIndex("month"));
-                year=c.getString(c.getColumnIndex("year"));
+                description=c.getString(c.getColumnIndex("description_event"));
+                importance=c.getString(c.getColumnIndex("importance_event"));
+                hour=c.getString(c.getColumnIndex("hour_event"));
+                minutes=c.getString(c.getColumnIndex("minutes_event"));
+                day=c.getString(c.getColumnIndex("day_event"));
+                month=c.getString(c.getColumnIndex("month_event"));
+                year=c.getString(c.getColumnIndex("year_event"));
 
                 list.add(description);
                 list.add(importance);
@@ -60,6 +63,16 @@ public class MainActivity extends Activity {
 
             }while(c.moveToNext());
         }
+        else
+        {
+            Toast.makeText(getApplicationContext(), "No data found", Toast.LENGTH_LONG).show();
+        }
+    }catch(Exception e)
+    {
+        Toast.makeText(getApplicationContext(), "No data found" +e.getMessage(), Toast.LENGTH_LONG).show();
+    }
+
+
         handler.close();
     }
 
