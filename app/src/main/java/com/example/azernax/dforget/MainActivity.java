@@ -25,7 +25,7 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        dataGridView = (GridView) findViewById(R.id.dgw); //dgw= Data Grid View
+        dataGridView = (GridView) findViewById(R.id.dgw); //dgw = Data Grid View
 
         list = new ArrayList<String>();
         adapter= new ArrayAdapter<String>(getApplicationContext(),android.R.layout.simple_spinner_item,list);
@@ -37,20 +37,20 @@ public class MainActivity extends Activity {
         handler.open();
 
 
-try
-{
+    try
+    {
     Cursor c = handler.DisplayData();
         if(c.moveToFirst())
         {
             do
             {
-                description=c.getString(c.getColumnIndex("description_event"));
-                importance=c.getString(c.getColumnIndex("importance_event"));
-                hour=c.getString(c.getColumnIndex("hour_event"));
-                minutes=c.getString(c.getColumnIndex("minutes_event"));
-                day=c.getString(c.getColumnIndex("day_event"));
-                month=c.getString(c.getColumnIndex("month_event"));
-                year=c.getString(c.getColumnIndex("year_event"));
+                description = c.getString(c.getColumnIndex("description_event"));
+                importance = c.getString(c.getColumnIndex("importance_event"));
+                hour = c.getString(c.getColumnIndex("hour_event"));
+                minutes = c.getString(c.getColumnIndex("minutes_event"));
+                day = c.getString(c.getColumnIndex("day_event"));
+                month = c.getString(c.getColumnIndex("month_event"));
+                year = c.getString(c.getColumnIndex("year_event"));
 
                 list.add(description);
                 list.add(importance);
@@ -65,11 +65,11 @@ try
         }
         else
         {
-            Toast.makeText(getApplicationContext(), "No data found", Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(), "Error: ", Toast.LENGTH_LONG).show();
         }
     }catch(Exception e)
     {
-        Toast.makeText(getApplicationContext(), "No data found" +e.getMessage(), Toast.LENGTH_LONG).show();
+        Toast.makeText(getApplicationContext(), "Error: " + e.getMessage(), Toast.LENGTH_LONG).show();
     }
 
 

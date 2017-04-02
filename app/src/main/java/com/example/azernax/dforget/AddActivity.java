@@ -75,13 +75,13 @@ public class AddActivity extends Activity {
                         txt_minutes.setText("");
                     }catch (Exception e)
                     {
-                        Toast.makeText(getApplicationContext(),"Error" +e.getMessage(), Toast.LENGTH_LONG).show();
+                        Toast.makeText(getApplicationContext(),"Error: " + e.getMessage(), Toast.LENGTH_LONG).show();
                     }
                 }
             });
         }catch (Exception e)
         {
-            Toast.makeText(getApplicationContext(),"Error" +e.getMessage(), Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(),"Error: " + e.getMessage(), Toast.LENGTH_LONG).show();
         }
     }
 }
