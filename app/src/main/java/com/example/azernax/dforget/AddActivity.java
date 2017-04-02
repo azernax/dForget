@@ -65,6 +65,12 @@ public class AddActivity extends Activity {
                 handler.open(); //open database
                 handler.InsertData(description, importance, hour, minutes, day_get, month_get, year_get);  //insert data to table
                 handler.close(); //close database
+
+                //clear the EditText fields
+                txt_description.setText("");
+                txt_importance.setText("");
+                txt_hour.setText("");
+                txt_minutes.setText("");
             }
         });
     }
