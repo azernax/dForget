@@ -16,6 +16,7 @@ public class MainActivity extends Activity {
         setContentView(R.layout.activity_main);
     }
 
+    //button which start "AddActivity"
     public void clickBTadd(View v)
     {
         Intent intent1 = new Intent(MainActivity.this, AddActivity.class);

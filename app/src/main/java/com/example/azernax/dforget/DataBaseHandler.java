@@ -26,7 +26,6 @@ public class DataBaseHandler {
     }
 
 
-
     public static class DataBaseHelper extends SQLiteOpenHelper
     {
         //create object to help create, open database etc....
@@ -66,7 +65,7 @@ public class DataBaseHandler {
 
 
     //metod for insert data
-    public long InsertData(String description_event, int importance_event, int hour_event, int minutes_event, int day_event, int month_event, int year_event)
+    public long InsertData(String description_event, String importance_event, int hour_event, int minutes_event, int day_event, int month_event, int year_event)
     {
         ContentValues content=new ContentValues();
         content.put("description_event", description_event);
