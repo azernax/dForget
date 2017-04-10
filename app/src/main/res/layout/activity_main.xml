@@ -14,7 +14,8 @@
         android:layout_alignParentLeft="true"
         android:fastScrollAlwaysVisible="true"
         android:fastScrollEnabled="true"
-        android:numColumns="7" >
+        android:numColumns="7"
+        android:layout_above="@+id/floatingActionButton">
     </GridView>
 
     <android.support.design.widget.FloatingActionButton

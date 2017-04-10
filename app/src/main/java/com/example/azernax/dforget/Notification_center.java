@@ -15,12 +15,12 @@ import android.view.View;
 
 public class Notification_center extends AppCompatActivity {
 
-    public void showNotification(View view)
+    public void showNotification(View view, String description)
     {
         NotificationCompat.Builder builder = new NotificationCompat.Builder(this);
         builder.setSmallIcon(R.drawable.icon);
         builder.setContentTitle("dF Notification!");
-        builder.setContentText("--description event--");
+        builder.setContentText(description); //--description event--
 
         Intent intent = new Intent(this, MainActivity.class);
         TaskStackBuilder stackBuilder = TaskStackBuilder.create(this);
