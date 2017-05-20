@@ -64,7 +64,7 @@ public class DataBaseHandler {
     }
 
 
-    //metod for insert data
+    //method for insert data
     public long InsertData(String description_event, String importance_event, int hour_event, int minutes_event, int day_event, int month_event, int year_event)
     {
         ContentValues content=new ContentValues();

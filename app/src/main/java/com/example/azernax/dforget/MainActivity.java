@@ -3,7 +3,9 @@ package com.example.azernax.dforget;
 import android.app.Activity;
 import android.content.Intent;
 import android.database.Cursor;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.RequiresApi;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.GridView;
@@ -20,6 +22,7 @@ public class MainActivity extends Activity {
     DataBaseHandler handler;
 
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,10 +35,13 @@ public class MainActivity extends Activity {
 
         String description, importance, hour, minutes, day, month, year;
 
+        //test
+        ScheduleNotification object1 = new ScheduleNotification();
+        object1.setAlarm(getApplicationContext(), 2017,4,20,13,51,35);
+        //
 
         handler=new DataBaseHandler(getBaseContext());
         handler.open();
-
 
     try
     {
