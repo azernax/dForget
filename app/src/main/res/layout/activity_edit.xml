@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.azernax.dforget.EditActivity">
+
+
+    <EditText
+        android:id="@+id/txt_description_E"
+        android:layout_width="150dp"
+        android:layout_height="40dp"
+        android:layout_marginLeft="26dp"
+        android:layout_marginStart="26dp"
+        android:ems="10"
+        android:inputType="textMultiLine"
+        android:layout_below="@+id/calendarView_E"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="70dp"
+        android:layout_toLeftOf="@+id/txt_importance_E"
+        android:layout_toStartOf="@+id/txt_importance_E" />
+
+    <EditText
+        android:id="@+id/txt_importance_E"
+        android:layout_width="20dp"
+        android:layout_height="40dp"
+        android:ems="10"
+        android:inputType="textShortMessage"
+        android:text="c"
+        android:layout_alignBaseline="@+id/txt_description_E"
+        android:layout_alignBottom="@+id/txt_description_E"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginRight="28dp"
+        android:layout_marginEnd="28dp" />
+
+    <Button
+        android:id="@+id/bt_edit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="19dp"
+        android:text="accept"
+        android:onClick=""/>
+
+    <TimePicker
+        android:id="@+id/timePicker_E"
+        android:layout_width="200dp"
+        android:layout_height="300dp"
+        android:scaleY="0.70"
+        android:scaleX="0.70"
+        android:layout_alignParentTop="true"
+        android:layout_toEndOf="@+id/calendarView_E"
+        android:layout_toRightOf="@+id/calendarView_E" />
+
+    <CalendarView
+        android:id="@+id/calendarView_E"
+        android:layout_width="210dp"
+        android:layout_height="300dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true" />
+
+</RelativeLayout>

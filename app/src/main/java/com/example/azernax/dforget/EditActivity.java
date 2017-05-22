@@ -1,30 +1,34 @@
 package com.example.azernax.dforget;
 
 import android.app.Activity;
+import android.icu.util.Calendar;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.RequiresApi;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.CalendarView;
+import android.widget.EditText;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
-import static com.example.azernax.dforget.R.id.timePicker;
+import static com.example.azernax.dforget.MainActivity.e_description;
+import static com.example.azernax.dforget.MainActivity.e_importance;
 
-public class AddActivity extends Activity {
+/**
+ * Created by AZERNAX on 21.05.2017.
+ */
 
-
+public class EditActivity extends Activity {
     //main variables
-    private EditText txt_description;
-    private EditText txt_importance;
-    private int txt_hour;
-    private int txt_minutes;
-    private Button bt_add;
-    private int year_get;
-    private int month_get;
-    private int day_get;
+    protected EditText txt_description_E;
+    protected EditText txt_importance_E;
+    protected int txt_hour;
+    protected int txt_minutes;
+    private Button bt_edit;
+    protected int year_get;
+    protected int month_get;
+    protected int day_get;
 
     DataBaseHandler handler;
 
@@ -33,15 +37,19 @@ public class AddActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add);
+        setContentView(R.layout.activity_edit);
 
-        txt_description = (EditText) findViewById(R.id.txt_description);
-        txt_importance = (EditText) findViewById(R.id.txt_importance);
-        bt_add = (Button) findViewById(R.id.bt_add);
+        txt_description_E = (EditText) findViewById(R.id.txt_description_E);
+        txt_importance_E = (EditText) findViewById(R.id.txt_importance_E);
+        bt_edit = (Button) findViewById(R.id.bt_edit);
 
+        txt_description_E.setText(e_description);
+        txt_importance_E.setText(e_importance);
 
         //get data when click on calendar
-        CalendarView calendarView=(CalendarView) findViewById(R.id.calendarView);
+        CalendarView calendarView=(CalendarView) findViewById(R.id.calendarView_E);
+
+
         calendarView.setOnDateChangeListener(new CalendarView.OnDateChangeListener()
         {
             @Override
@@ -53,17 +61,17 @@ public class AddActivity extends Activity {
             }
         });
 
-        try {
-            //action when click on button "bt_add"
-            bt_add.setOnClickListener(new View.OnClickListener() {
 
-                @RequiresApi(api = Build.VERSION_CODES.N)
+        try {
+            //action when click on button "bt_edit"
+            bt_edit.setOnClickListener(new View.OnClickListener() {
+
                 @Override
                 public void onClick(View v) {
                     try {
                         //converts data
-                        String description = txt_description.getText().toString();
-                        String importance = txt_importance.getText().toString();
+                        String description = txt_description_E.getText().toString();
+                        String importance = txt_importance_E.getText().toString();
 
                         //get time from timePicker
                         TimePicker timePicker =(TimePicker) findViewById(R.id.timePicker);
@@ -76,8 +84,8 @@ public class AddActivity extends Activity {
                         handler.close(); //close database
 
                         //clear the EditText fields
-                        txt_description.setText("");
-                        txt_importance.setText("");
+                        txt_description_E.setText("");
+                        txt_importance_E.setText("");
 
                         finish();
 

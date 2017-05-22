@@ -40,7 +40,7 @@ public class ScheduleNotification extends WakefulBroadcastReceiver {
         builder.setSmallIcon(R.drawable.icon);
         builder.setContentTitle("dF Notification!");
         builder.setContentText("description"); //--description event--
-        
+
         TaskStackBuilder stackBuilder = TaskStackBuilder.create(context);
         stackBuilder.addParentStack(MainActivity.class);
         stackBuilder.addNextIntent(intent);
