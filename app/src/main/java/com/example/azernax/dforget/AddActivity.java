@@ -6,27 +6,24 @@ import android.os.Bundle;
 import android.support.annotation.RequiresApi;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.CalendarView;
+import android.widget.EditText;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
-import static com.example.azernax.dforget.R.id.timePicker;
-
 public class AddActivity extends Activity {
 
-
     //main variables
-    private EditText txt_description;
-    private EditText txt_importance;
-    private int txt_hour;
-    private int txt_minutes;
-    private Button bt_add;
-    private int year_get;
-    private int month_get;
-    private int day_get;
+    private EditText    txt_description;
+    private EditText    txt_importance;
+    private Button      bt_add;
+    private int         txt_hour;
+    private int         txt_minutes;
+    private int         year_get;
+    private int         month_get;
+    private int         day_get;
 
-    DataBaseHandler handler;
+    DataBaseHandler     handler;
 
 
     @RequiresApi(api = Build.VERSION_CODES.M)
@@ -35,9 +32,9 @@ public class AddActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add);
 
-        txt_description = (EditText) findViewById(R.id.txt_description);
-        txt_importance = (EditText) findViewById(R.id.txt_importance);
-        bt_add = (Button) findViewById(R.id.bt_add);
+        txt_description  = (EditText) findViewById(R.id.txt_description);
+        txt_importance   = (EditText) findViewById(R.id.txt_importance);
+        bt_add           = (Button)   findViewById(R.id.bt_add);
 
 
         //get data when click on calendar
@@ -47,9 +44,9 @@ public class AddActivity extends Activity {
             @Override
             public void onSelectedDayChange(CalendarView view, int year, int month, int day)
             {
-                year_get = year;
-                month_get = month;
-                day_get = day;
+                year_get    = year;
+                month_get   = month;
+                day_get     = day;
             }
         });
 
@@ -62,13 +59,13 @@ public class AddActivity extends Activity {
                 public void onClick(View v) {
                     try {
                         //converts data
-                        String description = txt_description.getText().toString();
-                        String importance = txt_importance.getText().toString();
+                        String description   = txt_description.getText().toString();
+                        String importance    = txt_importance.getText().toString();
 
                         //get time from timePicker
-                        TimePicker timePicker =(TimePicker) findViewById(R.id.timePicker);
-                        txt_hour = timePicker.getHour();
-                        txt_minutes = timePicker.getMinute();
+                        TimePicker timePicker = (TimePicker) findViewById(R.id.timePicker);
+                        txt_hour              = timePicker.getHour();
+                        txt_minutes           = timePicker.getMinute();
 
                         handler = new DataBaseHandler(getBaseContext()); //create new handler object
                         handler.open(); //open database
@@ -78,6 +75,18 @@ public class AddActivity extends Activity {
                         //clear the EditText fields
                         txt_description.setText("");
                         txt_importance.setText("");
+
+
+                        //test add notification
+                        ScheduleNotification object = new ScheduleNotification();
+                        object.setAlarm(getApplicationContext(), year_get,month_get,day_get,txt_hour,txt_minutes,0,description);
+                        //
+                        ScheduleNotification object2 = new ScheduleNotification();
+                        object2.setAlarm(getApplicationContext(), year_get,month_get+1,day_get,txt_hour,txt_minutes,0,description);
+                        //
+
+                        DescriptionControl d = new DescriptionControl();
+                        d.getDescriptions(getApplicationContext());
 
                         finish();
 

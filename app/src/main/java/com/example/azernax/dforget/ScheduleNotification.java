@@ -10,14 +10,18 @@ import android.os.Build;
 import android.support.annotation.RequiresApi;
 import android.support.v4.app.TaskStackBuilder;
 import android.support.v4.content.WakefulBroadcastReceiver;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.app.NotificationCompat;
-import android.view.View;
 import android.widget.Toast;
 
 import java.util.Date;
 
-import static android.content.Context.NOTIFICATION_SERVICE;
+import static com.example.azernax.dforget.MainActivity.d1;
+import static com.example.azernax.dforget.MainActivity.d2;
+import static com.example.azernax.dforget.MainActivity.d3;
+import static com.example.azernax.dforget.MainActivity.sd1;
+import static com.example.azernax.dforget.MainActivity.sd2;
+import static com.example.azernax.dforget.MainActivity.sd3;
+
 
 /**
  * Created by AZERNAX on 10.04.2017.
@@ -26,38 +30,84 @@ import static android.content.Context.NOTIFICATION_SERVICE;
 public class ScheduleNotification extends WakefulBroadcastReceiver {
 
     private AlarmManager alarmManager;
+    private String description_event;
 
+    public static String descToShow="";
+
+
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     public void onReceive(Context context, Intent intent) {
         ScheduleNotification.completeWakefulIntent(intent);
 
-        //create notification to show !!!
-        Toast.makeText(context, "TEST schedule!!!! ", Toast.LENGTH_LONG).show();
+        alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
 
+        if (d1 != sd1)
+        {
+            descToShow = d1;
+        }else if (d1 != sd2)
+        {
+            descToShow = d2;
+        }else if (d1 != sd3)
+        {
+            descToShow = d3;
+        }
+
+       if (sd1 != null)
+       {
+           sd1 = descToShow;
+       }else if (sd2 != null)
+       {
+           sd2 = descToShow;
+       }else if (sd3 != null)
+       {
+           sd3 = descToShow;
+       }else {
+           sd1 = descToShow;
+       }
+
+        DataBaseHandler dbh = new DataBaseHandler(context);
+        dbh.open();
+        dbh.DeleteRow(descToShow);
+        dbh.close();
+
+
+        Toast.makeText(context, descToShow, Toast.LENGTH_LONG).show();
 
         //notification
         NotificationCompat.Builder builder = new NotificationCompat.Builder(context);
         builder.setSmallIcon(R.drawable.icon);
-        builder.setContentTitle("dF Notification!");
-        builder.setContentText("description"); //--description event--
+        builder.setContentTitle(descToShow);
+        builder.setContentText(descToShow); //--description event--
+        builder.setAutoCancel(false).build();
 
+        //from android dev:
+        Intent resultIntent = new Intent(context, MainActivity.class);
         TaskStackBuilder stackBuilder = TaskStackBuilder.create(context);
-        stackBuilder.addParentStack(MainActivity.class);
-        stackBuilder.addNextIntent(intent);
 
-        PendingIntent pendingIntent = stackBuilder.getPendingIntent(0,PendingIntent.FLAG_UPDATE_CURRENT);
-        builder.setContentIntent(pendingIntent);
-        NotificationManager NM = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
-        NM.notify(0,builder.build());
+        stackBuilder.addParentStack(MainActivity.class);
+
+        stackBuilder.addNextIntent(resultIntent);
+        PendingIntent resultPendingIntent = stackBuilder.getPendingIntent( 0, PendingIntent.FLAG_UPDATE_CURRENT );
+        builder.setContentIntent(resultPendingIntent);
+        NotificationManager mNotificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+
+        mNotificationManager.notify(1, builder.build());
+        PendingIntent notifyPIntent = PendingIntent.getActivity(context, 0, new Intent(), 0);
+        builder.setContentIntent(notifyPIntent);
     }
 
     @RequiresApi(api = Build.VERSION_CODES.N)
-    public void setAlarm(Context context, int year, int month, int day, int hour, int minute, int second)
+    public void setAlarm(Context context, int year, int month, int day, int hour, int minute, int second, String description)
     {
         alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
         Intent intent = new Intent(context, ScheduleNotification.class);
         PendingIntent alarmIntent = PendingIntent.getBroadcast(context, 0, intent, 0);
         Calendar calendar = Calendar.getInstance();
+
+        //test
+        description_event = description;
+        //
 
         //set date to show notification
         calendar.set(Calendar.YEAR, year);               //year
@@ -70,5 +120,4 @@ public class ScheduleNotification extends WakefulBroadcastReceiver {
         Date date = calendar.getTime();
         alarmManager.setExact(alarmManager.RTC_WAKEUP, date.getTime(), alarmIntent);
     }
-
 }

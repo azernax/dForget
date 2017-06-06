@@ -1,7 +1,6 @@
 package com.example.azernax.dforget;
 
 import android.app.Activity;
-import android.icu.util.Calendar;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.RequiresApi;

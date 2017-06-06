@@ -2,19 +2,17 @@ package com.example.azernax.dforget;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.RequiresApi;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.GridView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -25,17 +23,38 @@ public class MainActivity extends Activity {
     //static variables
     public static String e_description="", e_importance="", e_hour="", e_minutes="", e_day="", e_month="", e_year="";;
 
-    private GridView dataGridView;
-    private ArrayList<String> list;
+    private GridView             dataGridView;
+    private ArrayList<String>    list;
     private ArrayAdapter<String> adapter;
-    DataBaseHandler handler;
+    DataBaseHandler              handler;
 
+    public static boolean uzyto;
+   public static String d1,d2,d3,sd1,sd2,sd3;
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        //description to show
+        SharedPreferences desc1 = getSharedPreferences("DESC", 0);
+        SharedPreferences desc2 = getSharedPreferences("DESC", 0);
+        SharedPreferences desc3 = getSharedPreferences("DESC", 0);
+
+        //Descriptions displayed
+        SharedPreferences sDesc1 = getSharedPreferences("DESC", 0);
+        SharedPreferences sDesc2 = getSharedPreferences("DESC", 0);
+        SharedPreferences sDesc3 = getSharedPreferences("DESC", 0);
+
+
+        d1 = desc1.getString("desc1", "");
+        d2 = desc2.getString("desc2", "");
+        d3 = desc3.getString("desc3", "");
+
+        sd1 = sDesc1.getString("sDesc1", "");
+        sd2 = sDesc2.getString("sDesc2", "");
+        sd3 = sDesc3.getString("sDesc3", "");
 
         //run method which draw GridView list
         drawGridView();
@@ -50,11 +69,10 @@ public class MainActivity extends Activity {
                 //loop which clear background color
                 for(int u = list.size()-1; u>=0 ;u--)
                 {
-                    view = (View) dataGridView.getChildAt(u);
+                    view = dataGridView.getChildAt(u);
                     view.setBackgroundColor(Color.WHITE);
                 }
 
-                //if(list.get(position) != null)
                 for (int i =0; i < 1000;)
                 {
                     if(position > i)
@@ -74,7 +92,7 @@ public class MainActivity extends Activity {
 
                 for (int i=position;i<(position+7);i++ )
                 {
-                    view = (View) dataGridView.getChildAt(i);
+                    view = dataGridView.getChildAt(i);
                     view.setBackgroundColor(Color.rgb(211,217,229));
                 }
 
@@ -98,33 +116,29 @@ public class MainActivity extends Activity {
     {
         dataGridView = (GridView) findViewById(R.id.dgw); //dgw = Data Grid View
 
-        list = new ArrayList<String>();
-        adapter= new ArrayAdapter<String>(getApplicationContext(),android.R.layout.simple_spinner_item,list);
+        list         = new ArrayList<String>();
+        adapter      = new ArrayAdapter<String>(getApplicationContext(),android.R.layout.simple_spinner_item,list);
 
         String description, importance, hour, minutes, day, month, year;
 
-        //test
-        ScheduleNotification object1 = new ScheduleNotification();
-        object1.setAlarm(getApplicationContext(), 2017,4,20,13,51,35);
-        //
-
-        handler=new DataBaseHandler(getBaseContext());
+        handler = new DataBaseHandler(getBaseContext());
         handler.open();
 
         try
         {
-            Cursor c = handler.DisplayData();
+          Cursor c = handler.DisplayData();
             if(c.moveToFirst())
             {
                 do
                 {
                     description = c.getString(c.getColumnIndex("description_event"));
-                    importance = c.getString(c.getColumnIndex("importance_event"));
-                    hour = c.getString(c.getColumnIndex("hour_event"));
-                    minutes = c.getString(c.getColumnIndex("minutes_event"));
-                    day = c.getString(c.getColumnIndex("day_event"));
-                    month = c.getString(c.getColumnIndex("month_event"));
-                    year = c.getString(c.getColumnIndex("year_event"));
+                    importance  = c.getString(c.getColumnIndex("importance_event"));
+                    hour        = c.getString(c.getColumnIndex("hour_event"));
+                    minutes     = c.getString(c.getColumnIndex("minutes_event"));
+                    day         = c.getString(c.getColumnIndex("day_event"));
+                    month       = c.getString(c.getColumnIndex("month_event"));
+                    year        = c.getString(c.getColumnIndex("year_event"));
+
 
                     list.add(description);
                     list.add(importance);
@@ -146,10 +160,7 @@ public class MainActivity extends Activity {
             Toast.makeText(getApplicationContext(), "Error: " + e.getMessage(), Toast.LENGTH_LONG).show();
         }
         handler.close();
-
     }
-
-
 
     //button which start "AddActivity"
     public void clickBTadd(View v)
@@ -179,5 +190,41 @@ public class MainActivity extends Activity {
         handler.DeleteData();
         handler.close();
         drawGridView();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+
+        SharedPreferences desc1 = getSharedPreferences("DESC", 0);
+        SharedPreferences.Editor editor = desc1.edit();
+        editor.putString("desc1", d1);
+        editor.commit();
+
+        SharedPreferences desc2 = getSharedPreferences("DESC", 0);
+        SharedPreferences.Editor editor2 = desc2.edit();
+        editor2.putString("desc2", d2);
+        editor2.commit();
+
+        SharedPreferences desc3 = getSharedPreferences("DESC", 0);
+        SharedPreferences.Editor editor3 = desc3.edit();
+        editor3.putString("desc3", d3);
+        editor3.commit();
+
+//
+        SharedPreferences sDesc1 = getSharedPreferences("DESC", 0);
+        SharedPreferences.Editor seditor = sDesc1.edit();
+        seditor.putString("sDesc1", sd1);
+        seditor.commit();
+
+        SharedPreferences sDesc2 = getSharedPreferences("DESC", 0);
+        SharedPreferences.Editor seditor2 = sDesc2.edit();
+        seditor2.putString("sDesc2", sd2);
+        seditor2.commit();
+
+        SharedPreferences sDesc3 = getSharedPreferences("DESC", 0);
+        SharedPreferences.Editor seditor3 = sDesc3.edit();
+        seditor3.putString("sDesc3", sd3);
+        seditor3.commit();
     }
 }
