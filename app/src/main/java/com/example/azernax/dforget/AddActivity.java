@@ -11,17 +11,20 @@ import android.widget.EditText;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+
 public class AddActivity extends Activity {
 
     //main variables
-    private EditText    txt_description;
-    private EditText    txt_importance;
-    private Button      bt_add;
-    private int         txt_hour;
-    private int         txt_minutes;
-    private int         year_get;
-    private int         month_get;
-    private int         day_get;
+    private EditText            txt_description;
+    private EditText            txt_importance;
+    private Button              bt_add;
+    private int                 txt_hour;
+    private int                 txt_minutes;
+    private int                 year_get;
+    private int                 month_get;
+    private int                 day_get;
+    private ArrayList<String>   objects;
 
     DataBaseHandler     handler;
 
@@ -76,14 +79,16 @@ public class AddActivity extends Activity {
                         txt_description.setText("");
                         txt_importance.setText("");
 
+                        ScheduleNotification nameObject = new ScheduleNotification();
+                        nameObject.setAlarm(getApplicationContext(), year_get,month_get,day_get,txt_hour,txt_minutes,0,description);
 
-                        //test add notification
-                        ScheduleNotification object = new ScheduleNotification();
-                        object.setAlarm(getApplicationContext(), year_get,month_get,day_get,txt_hour,txt_minutes,0,description);
-                        //
-                        ScheduleNotification object2 = new ScheduleNotification();
-                        object2.setAlarm(getApplicationContext(), year_get,month_get+1,day_get,txt_hour,txt_minutes,0,description);
-                        //
+                                    System.out.println("################## CREATE OBJECT in AddActivity ###################");
+                                    System.out.println(year_get);
+                                    System.out.println(month_get);
+                                    System.out.println(day_get);
+                                    System.out.println(txt_hour);
+                                    System.out.println(txt_minutes);
+                                    System.out.println(description);
 
                         DescriptionControl d = new DescriptionControl();
                         d.getDescriptions(getApplicationContext());

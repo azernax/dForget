@@ -21,15 +21,14 @@ import java.util.ArrayList;
 public class MainActivity extends Activity {
 
     //static variables
-    public static String e_description="", e_importance="", e_hour="", e_minutes="", e_day="", e_month="", e_year="";;
+    public static String e_description="", e_importance="", e_hour="", e_minutes="", e_day="", e_month="", e_year="";
 
     private GridView             dataGridView;
     private ArrayList<String>    list;
     private ArrayAdapter<String> adapter;
     DataBaseHandler              handler;
 
-    public static boolean uzyto;
-   public static String d1,d2,d3,sd1,sd2,sd3;
+    public static String d1;
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
@@ -39,22 +38,8 @@ public class MainActivity extends Activity {
 
         //description to show
         SharedPreferences desc1 = getSharedPreferences("DESC", 0);
-        SharedPreferences desc2 = getSharedPreferences("DESC", 0);
-        SharedPreferences desc3 = getSharedPreferences("DESC", 0);
-
-        //Descriptions displayed
-        SharedPreferences sDesc1 = getSharedPreferences("DESC", 0);
-        SharedPreferences sDesc2 = getSharedPreferences("DESC", 0);
-        SharedPreferences sDesc3 = getSharedPreferences("DESC", 0);
-
-
         d1 = desc1.getString("desc1", "");
-        d2 = desc2.getString("desc2", "");
-        d3 = desc3.getString("desc3", "");
 
-        sd1 = sDesc1.getString("sDesc1", "");
-        sd2 = sDesc2.getString("sDesc2", "");
-        sd3 = sDesc3.getString("sDesc3", "");
 
         //run method which draw GridView list
         drawGridView();
@@ -109,7 +94,6 @@ public class MainActivity extends Activity {
         });
     }
 
-
     //method which draw GridView list
     @RequiresApi(api = Build.VERSION_CODES.N)
     public void drawGridView()
@@ -138,7 +122,6 @@ public class MainActivity extends Activity {
                     day         = c.getString(c.getColumnIndex("day_event"));
                     month       = c.getString(c.getColumnIndex("month_event"));
                     year        = c.getString(c.getColumnIndex("year_event"));
-
 
                     list.add(description);
                     list.add(importance);
@@ -200,31 +183,5 @@ public class MainActivity extends Activity {
         SharedPreferences.Editor editor = desc1.edit();
         editor.putString("desc1", d1);
         editor.commit();
-
-        SharedPreferences desc2 = getSharedPreferences("DESC", 0);
-        SharedPreferences.Editor editor2 = desc2.edit();
-        editor2.putString("desc2", d2);
-        editor2.commit();
-
-        SharedPreferences desc3 = getSharedPreferences("DESC", 0);
-        SharedPreferences.Editor editor3 = desc3.edit();
-        editor3.putString("desc3", d3);
-        editor3.commit();
-
-//
-        SharedPreferences sDesc1 = getSharedPreferences("DESC", 0);
-        SharedPreferences.Editor seditor = sDesc1.edit();
-        seditor.putString("sDesc1", sd1);
-        seditor.commit();
-
-        SharedPreferences sDesc2 = getSharedPreferences("DESC", 0);
-        SharedPreferences.Editor seditor2 = sDesc2.edit();
-        seditor2.putString("sDesc2", sd2);
-        seditor2.commit();
-
-        SharedPreferences sDesc3 = getSharedPreferences("DESC", 0);
-        SharedPreferences.Editor seditor3 = sDesc3.edit();
-        seditor3.putString("sDesc3", sd3);
-        seditor3.commit();
     }
 }

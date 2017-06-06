@@ -1,10 +1,12 @@
 package com.example.azernax.dforget;
 
+import android.annotation.TargetApi;
 import android.app.AlarmManager;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.icu.util.Calendar;
 import android.os.Build;
 import android.support.annotation.RequiresApi;
@@ -15,12 +17,13 @@ import android.widget.Toast;
 
 import java.util.Date;
 
+import static com.example.azernax.dforget.DescriptionControl.g_day;
+import static com.example.azernax.dforget.DescriptionControl.g_description;
+import static com.example.azernax.dforget.DescriptionControl.g_hour;
+import static com.example.azernax.dforget.DescriptionControl.g_minutes;
+import static com.example.azernax.dforget.DescriptionControl.g_month;
+import static com.example.azernax.dforget.DescriptionControl.g_year;
 import static com.example.azernax.dforget.MainActivity.d1;
-import static com.example.azernax.dforget.MainActivity.d2;
-import static com.example.azernax.dforget.MainActivity.d3;
-import static com.example.azernax.dforget.MainActivity.sd1;
-import static com.example.azernax.dforget.MainActivity.sd2;
-import static com.example.azernax.dforget.MainActivity.sd3;
 
 
 /**
@@ -35,6 +38,7 @@ public class ScheduleNotification extends WakefulBroadcastReceiver {
     public static String descToShow="";
 
 
+    @TargetApi(Build.VERSION_CODES.N)
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     public void onReceive(Context context, Intent intent) {
@@ -42,29 +46,11 @@ public class ScheduleNotification extends WakefulBroadcastReceiver {
 
         alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
 
-        if (d1 != sd1)
-        {
-            descToShow = d1;
-        }else if (d1 != sd2)
-        {
-            descToShow = d2;
-        }else if (d1 != sd3)
-        {
-            descToShow = d3;
-        }
 
-       if (sd1 != null)
-       {
-           sd1 = descToShow;
-       }else if (sd2 != null)
-       {
-           sd2 = descToShow;
-       }else if (sd3 != null)
-       {
-           sd3 = descToShow;
-       }else {
-           sd1 = descToShow;
-       }
+        SharedPreferences desc1 = context.getSharedPreferences("DESC", Context.MODE_PRIVATE);
+        d1 = desc1.getString("desc1", "");
+
+        descToShow = d1;
 
         DataBaseHandler dbh = new DataBaseHandler(context);
         dbh.open();
@@ -95,7 +81,57 @@ public class ScheduleNotification extends WakefulBroadcastReceiver {
         mNotificationManager.notify(1, builder.build());
         PendingIntent notifyPIntent = PendingIntent.getActivity(context, 0, new Intent(), 0);
         builder.setContentIntent(notifyPIntent);
+
+                    System.out.println("----------- BEFORE function getDate ------------");
+                    System.out.println(g_year);
+                    System.out.println(g_month);
+                    System.out.println(g_day);
+                    System.out.println(g_hour);
+                    System.out.println(g_minutes);
+                    System.out.println(g_description);
+
+        //get date from database to next alarm
+        DescriptionControl ob = new DescriptionControl();
+        ob.getDate(context);
+
+                    System.out.println("----------- AFTER function getDate -------------");
+                    System.out.println(g_year);
+                    System.out.println(g_month);
+                    System.out.println(g_day);
+                    System.out.println(g_hour);
+                    System.out.println(g_minutes);
+                    System.out.println(g_description);
+
+
+
+        //                        PROBLEM
+        //******** when I create new object start INFINITE LOOP ********
+
+        //create next object alarm
+        ScheduleNotification Object = new ScheduleNotification();
+        Object.setAlarm(context, Integer.parseInt(g_year), Integer.parseInt(g_month)-1, Integer.parseInt(g_day), Integer.parseInt(g_hour), Integer.parseInt(g_minutes), 0 , g_description);
+        //**************************************************************
+
+
+
+                    System.out.println("######## AFTER CREATE OBJECT ##########");
+                    System.out.println(Integer.parseInt(g_year));
+                    System.out.println(Integer.parseInt(g_month)-1);
+                    System.out.println(Integer.parseInt(g_day));
+                    System.out.println(Integer.parseInt(g_hour));
+                    System.out.println(Integer.parseInt(g_minutes));
+                    System.out.println(g_description);
+
+        //clear variables
+        g_year = "";
+        g_month = "";
+        g_day = "";
+        g_hour = "";
+        g_minutes = "";
+        g_description = "";
     }
+
+
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     public void setAlarm(Context context, int year, int month, int day, int hour, int minute, int second, String description)
