@@ -2,7 +2,6 @@ package com.example.azernax.dforget;
 
 import android.content.Context;
 import android.database.Cursor;
-import android.widget.Toast;
 
 import static com.example.azernax.dforget.MainActivity.d1;
 
@@ -17,7 +16,6 @@ public class DescriptionControl {
     //method which get description to show from my database (sqlite)
     public void getDescriptions(Context context)
     {
-
         DataBaseHandler handler;
         String str[] = new String[3];
         handler = new DataBaseHandler(context);
@@ -63,15 +61,12 @@ public class DescriptionControl {
             }
             else
             {
-                Toast.makeText(context, "Error: ", Toast.LENGTH_LONG).show();
+              //  Toast.makeText(context, "Error: ", Toast.LENGTH_LONG).show();
             }
         }catch(Exception e)
         {
-            Toast.makeText(context, "Error: " + e.getMessage(), Toast.LENGTH_LONG).show();
+        //    Toast.makeText(context, "Error: " + e.getMessage(), Toast.LENGTH_LONG).show();
         }
         handler.close();
     }
-
-
-
 }

@@ -98,14 +98,11 @@ public class DataBaseHandler {
     //show 1 description event
     public Cursor DisplayDesc()
     {
-        return db.rawQuery("SELECT description_event FROM eventsTab ORDER BY year_event, month_event, day_event, hour_event, minutes_event LIMIT 1", null);
+        return db.rawQuery("SELECT description_event FROM eventsTab WHERE description_event != '' ORDER BY year_event, month_event, day_event, hour_event, minutes_event LIMIT 1", null);
     }
 
     public Cursor getDateFromTab()
     {
-        return db.rawQuery("SELECT * FROM eventsTab ORDER BY year_event, month_event, day_event, hour_event, minutes_event LIMIT 1", null);
+        return db.rawQuery("SELECT * FROM eventsTab WHERE description_event != '' ORDER BY year_event, month_event, day_event, hour_event, minutes_event LIMIT 1", null);
     }
-
-
-
 }

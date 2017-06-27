@@ -9,7 +9,6 @@ import android.widget.Button;
 import android.widget.CalendarView;
 import android.widget.EditText;
 import android.widget.TimePicker;
-import android.widget.Toast;
 
 import static com.example.azernax.dforget.MainActivity.e_description;
 import static com.example.azernax.dforget.MainActivity.e_importance;
@@ -90,13 +89,13 @@ public class EditActivity extends Activity {
 
                     }catch (Exception e)
                     {
-                        Toast.makeText(getApplicationContext(),"Error: " + e.getMessage(), Toast.LENGTH_LONG).show();
+                 //       Toast.makeText(getApplicationContext(),"Error: " + e.getMessage(), Toast.LENGTH_LONG).show();
                     }
                 }
             });
         }catch (Exception e)
         {
-            Toast.makeText(getApplicationContext(),"Error: " + e.getMessage(), Toast.LENGTH_LONG).show();
+        //    Toast.makeText(getApplicationContext(),"Error: " + e.getMessage(), Toast.LENGTH_LONG).show();
         }
     }
 }

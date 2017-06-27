@@ -89,7 +89,8 @@ public class MainActivity extends Activity {
                 e_month         = list.get(position+5);
                 e_year          = list.get(position+6);
 
-                Toast.makeText(getApplicationContext(),"Item Clicked: " + list.get(position)+" "+ list.get(position+1)+" "+ list.get(position+2)+" "+ list.get(position+3)+" "+ list.get(position+4)+" "+ list.get(position+5)+" "+ list.get(position+6), Toast.LENGTH_SHORT).show();
+              //  Toast.makeText(getApplicationContext(),"Item Clicked: " + list.get(position)+" "+ list.get(position+1)+" "+ list.get(position+2)+" "+ list.get(position+3)+" "+ list.get(position+4)+" "+ list.get(position+5)+" "+ list.get(position+6), Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), list.get(position), Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -134,13 +135,9 @@ public class MainActivity extends Activity {
 
                 }while(c.moveToNext());
             }
-            else
-            {
-                Toast.makeText(getApplicationContext(), "Error: ", Toast.LENGTH_LONG).show();
-            }
         }catch(Exception e)
         {
-            Toast.makeText(getApplicationContext(), "Error: " + e.getMessage(), Toast.LENGTH_LONG).show();
+      //      Toast.makeText(getApplicationContext(), "Error: " + e.getMessage(), Toast.LENGTH_LONG).show();
         }
         handler.close();
     }
@@ -173,15 +170,5 @@ public class MainActivity extends Activity {
         handler.DeleteData();
         handler.close();
         drawGridView();
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-
-        SharedPreferences desc1 = getSharedPreferences("DESC", 0);
-        SharedPreferences.Editor editor = desc1.edit();
-        editor.putString("desc1", d1);
-        editor.commit();
     }
 }

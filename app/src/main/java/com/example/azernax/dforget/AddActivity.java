@@ -1,6 +1,8 @@
 package com.example.azernax.dforget;
 
 import android.app.Activity;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.RequiresApi;
@@ -9,9 +11,14 @@ import android.widget.Button;
 import android.widget.CalendarView;
 import android.widget.EditText;
 import android.widget.TimePicker;
-import android.widget.Toast;
 
-import java.util.ArrayList;
+import static com.example.azernax.dforget.DescriptionControl.g_day;
+import static com.example.azernax.dforget.DescriptionControl.g_description;
+import static com.example.azernax.dforget.DescriptionControl.g_hour;
+import static com.example.azernax.dforget.DescriptionControl.g_minutes;
+import static com.example.azernax.dforget.DescriptionControl.g_month;
+import static com.example.azernax.dforget.DescriptionControl.g_year;
+import static com.example.azernax.dforget.MainActivity.d1;
 
 public class AddActivity extends Activity {
 
@@ -24,7 +31,7 @@ public class AddActivity extends Activity {
     private int                 year_get;
     private int                 month_get;
     private int                 day_get;
-    private ArrayList<String>   objects;
+
 
     DataBaseHandler     handler;
 
@@ -39,7 +46,6 @@ public class AddActivity extends Activity {
         txt_importance   = (EditText) findViewById(R.id.txt_importance);
         bt_add           = (Button)   findViewById(R.id.bt_add);
 
-
         //get data when click on calendar
         CalendarView calendarView=(CalendarView) findViewById(R.id.calendarView);
         calendarView.setOnDateChangeListener(new CalendarView.OnDateChangeListener()
@@ -52,8 +58,7 @@ public class AddActivity extends Activity {
                 day_get     = day;
             }
         });
-
-        try {
+    try {
             //action when click on button "bt_add"
             bt_add.setOnClickListener(new View.OnClickListener() {
 
@@ -79,31 +84,42 @@ public class AddActivity extends Activity {
                         txt_description.setText("");
                         txt_importance.setText("");
 
-                        ScheduleNotification nameObject = new ScheduleNotification();
-                        nameObject.setAlarm(getApplicationContext(), year_get,month_get,day_get,txt_hour,txt_minutes,0,description);
 
-                                    System.out.println("################## CREATE OBJECT in AddActivity ###################");
-                                    System.out.println(year_get);
-                                    System.out.println(month_get);
-                                    System.out.println(day_get);
-                                    System.out.println(txt_hour);
-                                    System.out.println(txt_minutes);
-                                    System.out.println(description);
+                        DescriptionControl o = new DescriptionControl();
+                        o.getDate(getApplicationContext());
 
                         DescriptionControl d = new DescriptionControl();
                         d.getDescriptions(getApplicationContext());
+
+                        ScheduleNotification nameObject = new ScheduleNotification();
+                        //nameObject.setAlarm(getApplicationContext(), year_get,month_get,day_get,txt_hour,txt_minutes,0,description);
+                        nameObject.setAlarm(getApplicationContext(), Integer.parseInt(g_year), Integer.parseInt(g_month)-1, Integer.parseInt(g_day), Integer.parseInt(g_hour), Integer.parseInt(g_minutes), 0 , g_description);
+
+                        SharedPreferences desc1 = getApplicationContext().getSharedPreferences("DESC", Context.MODE_PRIVATE);
+                        d1 = desc1.getString("desc1", "");
 
                         finish();
 
                     }catch (Exception e)
                     {
-                        Toast.makeText(getApplicationContext(),"Error: " + e.getMessage(), Toast.LENGTH_LONG).show();
+                     //   Toast.makeText(getApplicationContext(),"Error: " + e.getMessage(), Toast.LENGTH_LONG).show();
                     }
                 }
             });
         }catch (Exception e)
         {
-            Toast.makeText(getApplicationContext(),"Error: " + e.getMessage(), Toast.LENGTH_LONG).show();
+          //  Toast.makeText(getApplicationContext(),"Error: " + e.getMessage(), Toast.LENGTH_LONG).show();
         }
+    }
+
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+
+        SharedPreferences desc1 = getSharedPreferences("DESC", 0);
+        SharedPreferences.Editor editor = desc1.edit();
+        editor.putString("desc1", d1);
+        editor.commit();
     }
 }
